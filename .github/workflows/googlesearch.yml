@@ -28,16 +28,17 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y wget unzip curl
-        wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-        sudo dpkg -i google-chrome-stable_current_amd64.deb
+        wget -q https://storage.googleapis.com/chrome-for-testing-public/125.0.6422.60/linux64/chrome-linux64.zip
+        unzip chrome-linux64.zip -d chrome
+        sudo mv chrome/chrome-linux64 /usr/local/share/
+        sudo ln -s /usr/local/share/chrome-linux64/chrome /usr/local/bin/google-chrome
         sudo apt-get -f install -y
 
     - name: Install ChromeDriver
       run: |
-        sudo apt-get install -y curl unzip
-        wget -q "https://chromedriver.storage.googleapis.com/96.0.4664.45/chromedriver_linux64.zip"
-        unzip chromedriver_linux64.zip
-        sudo mv chromedriver /usr/local/bin/
+        wget -q "https://storage.googleapis.com/chrome-for-testing-public/125.0.6422.60/linux64/chromedriver-linux64.zip"
+        unzip chromedriver-linux64.zip -d chromedriver
+        sudo mv chromedriver/chromedriver-linux64 /usr/local/bin/chromedriver
         sudo chmod +x /usr/local/bin/chromedriver
 
     - name: Install OpenFortiVPN
