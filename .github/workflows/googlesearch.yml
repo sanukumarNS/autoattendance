@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
+  workflow_dispatch:  # This allows manual triggering of the workflow
 
 jobs:
   google-search:
@@ -12,10 +12,10 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v2
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v2
       with:
         python-version: '3.x'
 
@@ -34,6 +34,7 @@ jobs:
 
     - name: Install ChromeDriver
       run: |
+        sudo apt-get install -y curl
         CHROME_VERSION=$(google-chrome --version | grep -oE '[0-9.]+')
         CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION%.*}")
         wget -q "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
